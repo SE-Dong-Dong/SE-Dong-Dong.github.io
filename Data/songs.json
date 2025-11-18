@@ -1,0 +1,44 @@
+{
+  "songs": [
+    {
+      "date": "2025.11.18",
+      "title": "White Birch Forest (Берёзовый лес)",
+      "artist": "Pu Shu",
+      "artistUrl": "https://en.wikipedia.org/wiki/Pu_Shu",
+      "youtubeUrl": "https://youtu.be/tKNE2tWQNIE?si=hFJd22w_tfxmpOs5",
+      "lyricsUrl": "Lyrics/2025111801.html"
+    },
+    {
+      "date": "2025.11.18",
+      "title": "Baby, До свидания",
+      "artist": "Pu Shu",
+      "artistUrl": "https://en.wikipedia.org/wiki/Pu_Shu",
+      "youtubeUrl": "https://youtu.be/v09VuBIIAlI?si=m-hJxvp9uO41EMAS",
+      "lyricsUrl": "Lyrics/2025111802.html"
+    },
+    {
+      "date": "2025.11.18",
+      "title": "Billie Jean",
+      "artist": "Michael Jackson",
+      "artistUrl": "#",
+      "youtubeUrl": "#",
+      "lyricsUrl": null
+    },
+    {
+      "date": "2025.11.18",
+      "title": "Hotel California",
+      "artist": "Eagles",
+      "artistUrl": "#",
+      "youtubeUrl": "#",
+      "lyricsUrl": null
+    },
+    {
+      "date": "2025.11.18",
+      "title": "Shape of You",
+      "artist": "Ed Sheeran",
+      "artistUrl": "#",
+      "youtubeUrl": "#",
+      "lyricsUrl": null
+    }
+  ]
+}
