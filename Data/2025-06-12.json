@@ -1,0 +1,19 @@
+{
+  "date": "2025-06-12",
+  "songs": [
+    {
+      "title": "Summer Noon",
+      "artist": "Sunfield",
+      "artistUrl": "https://example.com/sunfield",
+      "youtubeUrl": "https://youtu.be/example9",
+      "lyrics": ["The noon sun hums above the city."]
+    },
+    {
+      "title": "Seaside Echo",
+      "artist": "Shoreline",
+      "artistUrl": "https://example.com/shoreline",
+      "youtubeUrl": "https://youtu.be/example10",
+      "lyrics": ["Waves answer every whispered wish."]
+    }
+  ]
+}

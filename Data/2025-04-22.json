@@ -1,0 +1,19 @@
+{
+  "date": "2025-04-22",
+  "songs": [
+    {
+      "title": "Earth Song",
+      "artist": "Roots & Wings",
+      "artistUrl": "https://example.com/roots-wings",
+      "youtubeUrl": "https://youtu.be/example6",
+      "lyrics": ["We sing for the green and the blue."]
+    },
+    {
+      "title": "Bloom Again",
+      "artist": "Petal Crew",
+      "artistUrl": "https://example.com/petal-crew",
+      "youtubeUrl": "https://youtu.be/example7",
+      "lyrics": ["Petals open to morning laughter."]
+    }
+  ]
+}

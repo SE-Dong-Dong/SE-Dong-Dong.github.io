@@ -1,0 +1,19 @@
+{
+  "date": "2025-02-14",
+  "songs": [
+    {
+      "title": "Valentine Waltz",
+      "artist": "Heartstrings",
+      "artistUrl": "https://example.com/heartstrings",
+      "youtubeUrl": "https://youtu.be/example3",
+      "lyrics": ["Hold my hand and dance tonight."]
+    },
+    {
+      "title": "Red Roses",
+      "artist": "Bloom",
+      "artistUrl": "https://example.com/bloom",
+      "youtubeUrl": "https://youtu.be/example4",
+      "lyrics": ["Red roses whisper our secrets."]
+    }
+  ]
+}

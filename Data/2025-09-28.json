@@ -1,0 +1,19 @@
+{
+  "date": "2025-09-28",
+  "songs": [
+    {
+      "title": "Autumn Road",
+      "artist": "Maple Drive",
+      "artistUrl": "https://example.com/maple-drive",
+      "youtubeUrl": "https://youtu.be/example13",
+      "lyrics": ["Leaves gather on the roadside glass."]
+    },
+    {
+      "title": "Harvest Song",
+      "artist": "Barn Choir",
+      "artistUrl": "https://example.com/barn-choir",
+      "youtubeUrl": "https://youtu.be/example14",
+      "lyrics": ["We sing to the golden fields."]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "date": "2025-07-19",
+  "songs": [
+    {
+      "title": "Midsummer Fire",
+      "artist": "Ember Lane",
+      "artistUrl": "https://example.com/ember-lane",
+      "youtubeUrl": "https://youtu.be/example11",
+      "lyrics": ["We gather round the midsummer flame."]
+    }
+  ]
+}

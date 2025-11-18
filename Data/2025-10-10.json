@@ -1,0 +1,12 @@
+{
+  "date": "2025-10-10",
+  "songs": [
+    {
+      "title": "October Rain",
+      "artist": "Drizzle & Co",
+      "artistUrl": "https://example.com/drizzle-co",
+      "youtubeUrl": "https://youtu.be/example15",
+      "lyrics": ["Octobers taste like warm coffee."]
+    }
+  ]
+}

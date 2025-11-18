@@ -6,39 +6,87 @@
       "artist": "Pu Shu",
       "artistUrl": "https://en.wikipedia.org/wiki/Pu_Shu",
       "youtubeUrl": "https://youtu.be/tKNE2tWQNIE?si=hFJd22w_tfxmpOs5",
-      "lyricsUrl": "Lyrics/2025111801.html"
+      "lyrics": ["A quiet village covered with white snow."]
     },
     {
       "date": "2025.11.18",
-      "title": "Baby, До свидания",
-      "artist": "Pu Shu",
-      "artistUrl": "https://en.wikipedia.org/wiki/Pu_Shu",
-      "youtubeUrl": "https://youtu.be/v09VuBIIAlI?si=m-hJxvp9uO41EMAS",
-      "lyricsUrl": "Lyrics/2025111802.html"
+      "title": "Bohemian Rhapsody",
+      "artist": "Queen",
+      "artistUrl": "https://en.wikipedia.org/wiki/Queen_(band)",
+      "youtubeUrl": "https://www.youtube.com/watch?v=fJ9rUzIMt7o",
+      "lyrics": ["Is this the real life? Is this just fantasy?"]
     },
     {
       "date": "2025.11.18",
       "title": "Billie Jean",
       "artist": "Michael Jackson",
-      "artistUrl": "#",
-      "youtubeUrl": "#",
-      "lyricsUrl": null
+      "artistUrl": "https://en.wikipedia.org/wiki/Michael_Jackson",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Zi_XLOBo0B0",
+      "lyrics": ["Billie Jean is not my lover."]
     },
     {
-      "date": "2025.11.18",
+      "date": "2025.11.19",
       "title": "Hotel California",
       "artist": "Eagles",
-      "artistUrl": "#",
-      "youtubeUrl": "#",
-      "lyricsUrl": null
+      "artistUrl": "https://en.wikipedia.org/wiki/Eagles_(band)",
+      "youtubeUrl": "https://www.youtube.com/watch?v=EqPtz5qN7HM",
+      "lyrics": ["Welcome to the Hotel California."]
     },
     {
-      "date": "2025.11.18",
+      "date": "2025.11.19",
       "title": "Shape of You",
       "artist": "Ed Sheeran",
-      "artistUrl": "#",
-      "youtubeUrl": "#",
-      "lyricsUrl": null
+      "artistUrl": "https://en.wikipedia.org/wiki/Ed_Sheeran",
+      "youtubeUrl": "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+      "lyrics": ["I'm in love with the shape of you."]
+    },
+    {
+      "date": "2025.11.20",
+      "title": "Imagine",
+      "artist": "John Lennon",
+      "artistUrl": "https://en.wikipedia.org/wiki/John_Lennon",
+      "youtubeUrl": "https://www.youtube.com/watch?v=YkgkThdzX-8",
+      "lyrics": ["Imagine all the people living life in peace."]
+    },
+    {
+      "date": "2025.11.20",
+      "title": "Let It Be",
+      "artist": "The Beatles",
+      "artistUrl": "https://en.wikipedia.org/wiki/The_Beatles",
+      "youtubeUrl": "https://www.youtube.com/watch?v=QDYfEBY9NM4",
+      "lyrics": ["Let it be, let it be, let it be, let it be."]
+    },
+    {
+      "date": "2025.11.21",
+      "title": "Smells Like Teen Spirit",
+      "artist": "Nirvana",
+      "artistUrl": "https://en.wikipedia.org/wiki/Nirvana_(band)",
+      "youtubeUrl": "https://www.youtube.com/watch?v=hTWKbfoikeg",
+      "lyrics": ["Here we are now, entertain us."]
+    },
+    {
+      "date": "2025.11.21",
+      "title": "Rolling in the Deep",
+      "artist": "Adele",
+      "artistUrl": "https://en.wikipedia.org/wiki/Adele",
+      "youtubeUrl": "https://www.youtube.com/watch?v=rYEDA3JcQqw",
+      "lyrics": ["We could have had it all, rolling in the deep."]
+    },
+    {
+      "date": "2025.11.22",
+      "title": "Someone Like You",
+      "artist": "Adele",
+      "artistUrl": "https://en.wikipedia.org/wiki/Adele",
+      "youtubeUrl": "https://www.youtube.com/watch?v=hLQl3WQQoQ0",
+      "lyrics": ["Never mind, I'll find someone like you."]
+    },
+    {
+      "date": "2025.11.22",
+      "title": "Hey Jude",
+      "artist": "The Beatles",
+      "artistUrl": "https://en.wikipedia.org/wiki/The_Beatles",
+      "youtubeUrl": "https://www.youtube.com/watch?v=A_MjCqQoLLA",
+      "lyrics": ["Hey Jude, don't make it bad."]
     }
   ]
 }

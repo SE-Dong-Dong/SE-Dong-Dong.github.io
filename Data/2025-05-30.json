@@ -1,0 +1,12 @@
+{
+  "date": "2025-05-30",
+  "songs": [
+    {
+      "title": "Late May Drive",
+      "artist": "Highways",
+      "artistUrl": "https://example.com/highways",
+      "youtubeUrl": "https://youtu.be/example8",
+      "lyrics": ["Windows down, the road sings along."]
+    }
+  ]
+}

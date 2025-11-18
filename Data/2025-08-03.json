@@ -1,0 +1,12 @@
+{
+  "date": "2025-08-03",
+  "songs": [
+    {
+      "title": "Hot Breeze",
+      "artist": "Nocturnes",
+      "artistUrl": "https://example.com/nocturnes",
+      "youtubeUrl": "https://youtu.be/example12",
+      "lyrics": ["The hot breeze carries late-night songs."]
+    }
+  ]
+}

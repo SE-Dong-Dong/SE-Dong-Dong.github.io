@@ -1,0 +1,19 @@
+{
+  "date": "2025-01-05",
+  "songs": [
+    {
+      "title": "Winter Morning",
+      "artist": "Cold Notes",
+      "artistUrl": "https://example.com/cold-notes",
+      "youtubeUrl": "https://youtu.be/example1",
+      "lyrics": ["Snow falls quietly in the morning."]
+    },
+    {
+      "title": "First Light",
+      "artist": "Aurora",
+      "artistUrl": "https://example.com/aurora",
+      "youtubeUrl": "https://youtu.be/example2",
+      "lyrics": ["The first light paints the sky gold."]
+    }
+  ]
+}

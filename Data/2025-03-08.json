@@ -1,0 +1,12 @@
+{
+  "date": "2025-03-08",
+  "songs": [
+    {
+      "title": "Spring Steps",
+      "artist": "Greenway",
+      "artistUrl": "https://example.com/greenway",
+      "youtubeUrl": "https://youtu.be/example5",
+      "lyrics": ["Puddles mirror the cheerful sky."]
+    }
+  ]
+}

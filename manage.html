@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manage Songs</title>
+  <link rel="stylesheet" href="CSS/style.css">
+  <style>
+    /* Minimal overrides for manage UI */
+    .manage-wrapper { max-width: 1200px; margin: 24px auto; padding: 20px; }
+    .manage-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+    .manage-grid { display:flex; gap:20px; }
+    .manage-list { flex:1; max-height:70vh; overflow:auto; padding:12px; background: rgba(26,26,46,0.6); border-radius:8px; }
+    .manage-list .date-group { margin-bottom:12px; }
+    .manage-list .date-title { font-weight:700; color:var(--accent); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; }
+    .manage-list .song-row { display:flex; justify-content:space-between; gap:8px; padding:8px; background: rgba(0,0,0,0.08); border-radius:6px; margin-bottom:8px; }
+    .manage-form { width:420px; padding:16px; background: rgba(26,26,46,0.6); border-radius:8px; }
+    .manage-form label { display:block; margin-top:8px; font-size:13px; color:#cdd9df; }
+    .manage-form input, .manage-form textarea, .manage-form select { width:100%; padding:8px; margin-top:6px; border-radius:6px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit; }
+    .manage-actions { display:flex; gap:8px; margin-top:12px; }
+    .btn { padding:8px 12px; border-radius:6px; border:none; cursor:pointer; }
+    .btn.primary { background: linear-gradient(135deg,#64b5f6 0%,#42a5f5 100%); color:#fff; }
+    .btn.warn { background:#ff7043; color:#fff; }
+    .small { font-size:13px; padding:6px 8px; }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper manage-wrapper">
+    <div class="manage-header">
+      <h2 style="margin:0">Song Manager</h2>
+      <div>
+        <button id="btn-export-merged" class="btn small">Export merged songs.json</button>
+        <button id="btn-export-perdate" class="btn small">Download per-date JSONs</button>
+        <button id="btn-refresh" class="btn small">Refresh</button>
+      </div>
+    </div>
+
+    <div class="manage-grid">
+      <div class="manage-list" id="manage-list">
+        <!-- populated dynamically -->
+      </div>
+
+      <div class="manage-form" id="manage-form">
+        <h3 id="form-title">Select a song or add new</h3>
+        <label for="form-date">Date (YYYY-MM-DD)</label>
+        <input id="form-date" type="date">
+
+        <label for="form-title-input">Title</label>
+        <input id="form-title-input" type="text" placeholder="Song title">
+
+        <label for="form-artist-input">Artist</label>
+        <input id="form-artist-input" type="text" placeholder="Artist name">
+
+        <label for="form-artist-url">Artist URL</label>
+        <input id="form-artist-url" type="url" placeholder="https://...">
+
+        <label for="form-youtube">YouTube URL</label>
+        <input id="form-youtube" type="url" placeholder="https://...">
+
+        <label for="form-lyrics">Lyrics (each line becomes one array element)</label>
+        <textarea id="form-lyrics" rows="6" placeholder="Line1\nLine2"></textarea>
+
+        <div class="manage-actions">
+          <button id="btn-add" class="btn primary">Add</button>
+          <button id="btn-update" class="btn primary">Update</button>
+          <button id="btn-delete" class="btn warn">Delete</button>
+          <button id="btn-clearform" class="btn">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:10px;color:#9fb6c9;font-size:13px">Note: changes are kept in the browser. Use Export to download updated JSON and replace files in /Data manually or use your deployment process.</p>
+  </div>
+
+  <script>
+    let indexList = [];
+    let dateFiles = {}; // key: filename -> data object
+    let songsByDate = {}; // key: YYYY-MM-DD -> array of songs
+    let selected = { date: null, idx: null };
+
+    function normalizeToISO(dateStr) {
+      if (!dateStr) return null;
+      if (/\d{4}\.\d{1,2}\.\d{1,2}/.test(dateStr)) return dateStr.replace(/\./g, '-');
+      return dateStr;
+    }
+
+    function findFileForDate(date) {
+      // find indexList entry matching date exactly
+      for (const f of indexList) {
+        if (f.date === date) return f.file;
+      }
+      // fallback: try to find file name containing date
+      for (const f of indexList) {
+        if (f.file && f.file.indexOf(date) !== -1) return f.file;
+      }
+      return null;
+    }
+
+    async function loadIndexAndFiles() {
+      indexList = [];
+      dateFiles = {};
+      songsByDate = {};
+      try {
+        const idxResp = await fetch('./Data/index.json');
+        if (!idxResp.ok) throw new Error('Failed to load index.json');
+        const idx = await idxResp.json();
+        indexList = Array.isArray(idx.files) ? idx.files : [];
+
+        const fetches = indexList.map(f => fetch('./Data/' + f.file).then(r => ({ r, meta: f })).catch(e => ({ error: e, meta: f })));
+        const results = await Promise.all(fetches);
+        for (const res of results) {
+          if (res.error) { console.warn('fetch error', res.meta.file); continue; }
+          if (!res.r.ok) { console.warn('http error', res.meta.file, res.r.status); continue; }
+          const data = await res.r.json();
+          const fname = res.meta.file;
+          dateFiles[fname] = data;
+          const date = data.date || res.meta.date || '';
+          (data.songs || []).forEach(s => {
+            if (!s.date) s.date = date;
+            if (!songsByDate[s.date]) songsByDate[s.date] = [];
+            songsByDate[s.date].push(s);
+          });
+        }
+        renderManageList();
+      } catch (err) {
+        console.error('Failed to load index/date files:', err);
+        // try merged songs.json as fallback
+        try {
+          const resp = await fetch('./Data/songs.json');
+          if (resp.ok) {
+            const data = await resp.json();
+            (data.songs || []).forEach(s => {
+              const d = normalizeToISO(s.date) || s.date || 'unknown';
+              if (!songsByDate[d]) songsByDate[d] = [];
+              if (!s.date) s.date = d;
+              songsByDate[d].push(s);
+            });
+            renderManageList();
+            return;
+          }
+        } catch (e) {
+          console.warn('Merged fallback failed', e);
+        }
+        // give up quietly
+        const container = document.getElementById('manage-list');
+        container.innerHTML = '<div style="padding:12px;color:#f0ad4e">Cannot load Data files. Please ensure Data/index.json exists or use Export/Upload workflow.</div>';
+      }
+    }
+
+    function renderManageList() {
+      const container = document.getElementById('manage-list');
+      container.innerHTML = '';
+      const dates = Object.keys(songsByDate).sort((a,b)=> a<b?1:-1);
+      dates.forEach(d => {
+        const group = document.createElement('div');
+        group.className = 'date-group';
+        const title = document.createElement('div');
+        title.className = 'date-title';
+        title.innerHTML = `<span>${d}</span><button class="btn small" data-date="${d}">Add</button>`;
+        group.appendChild(title);
+        const addBtn = title.querySelector('button');
+        addBtn.onclick = () => { openFormForNew(d); };
+
+        songsByDate[d].forEach((s, i) => {
+          const row = document.createElement('div');
+          row.className = 'song-row';
+          const left = document.createElement('div');
+          left.style.flex = '1';
+          left.innerHTML = `<strong>${s.title || '(no title)'}</strong><div style='color:#9fb6c9;font-size:13px'>${s.artist||''}</div>`;
+          const right = document.createElement('div');
+          right.style.display='flex'; right.style.gap='8px';
+          const edit = document.createElement('button'); edit.className='btn small'; edit.textContent='Edit';
+          edit.onclick = () => openFormForEdit(d, i);
+          const del = document.createElement('button'); del.className='btn small'; del.textContent='Delete';
+          del.onclick = () => { if(confirm('Delete this song?')) { deleteSong(d,i); } };
+          right.appendChild(edit); right.appendChild(del);
+          row.appendChild(left); row.appendChild(right);
+          group.appendChild(row);
+        });
+
+        container.appendChild(group);
+      });
+    }
+
+    function openFormForEdit(date, idx) {
+      selected.date = date; selected.idx = idx;
+      const song = songsByDate[date][idx];
+      document.getElementById('form-title').textContent = 'Edit Song';
+      document.getElementById('form-date').value = date;
+      document.getElementById('form-title-input').value = song.title || '';
+      document.getElementById('form-artist-input').value = song.artist || '';
+      document.getElementById('form-artist-url').value = song.artistUrl || '';
+      document.getElementById('form-youtube').value = song.youtubeUrl || '';
+      document.getElementById('form-lyrics').value = Array.isArray(song.lyrics) ? song.lyrics.join('\n') : (song.lyrics||'');
+    }
+
+    function openFormForNew(date) {
+      selected.date = date; selected.idx = null;
+      document.getElementById('form-title').textContent = 'Add New Song';
+      document.getElementById('form-date').value = date;
+      document.getElementById('form-title-input').value = '';
+      document.getElementById('form-artist-input').value = '';
+      document.getElementById('form-artist-url').value = '';
+      document.getElementById('form-youtube').value = '';
+      document.getElementById('form-lyrics').value = '';
+    }
+
+    function clearForm() {
+      selected.date = null; selected.idx = null;
+      document.getElementById('form-title').textContent = 'Select a song or add new';
+      document.getElementById('form-date').value = '';
+      document.getElementById('form-title-input').value = '';
+      document.getElementById('form-artist-input').value = '';
+      document.getElementById('form-artist-url').value = '';
+      document.getElementById('form-youtube').value = '';
+      document.getElementById('form-lyrics').value = '';
+    }
+
+    function addSongFromForm() {
+      const date = document.getElementById('form-date').value;
+      if (!date) { alert('Please choose a date.'); return; }
+      const confirmAdd = confirm('Add this song?');
+      if (!confirmAdd) return;
+      const song = {
+        title: document.getElementById('form-title-input').value || 'Untitled',
+        artist: document.getElementById('form-artist-input').value || '',
+        artistUrl: document.getElementById('form-artist-url').value || '',
+        youtubeUrl: document.getElementById('form-youtube').value || '',
+        lyrics: document.getElementById('form-lyrics').value.split('\n').map(l=>l.trim()).filter(Boolean),
+        date: date
+      };
+      if (!songsByDate[date]) songsByDate[date] = [];
+      songsByDate[date].push(song);
+      // also update dateFiles: find file or create one in-memory
+      let fname = findFileForDate(date);
+      if (!fname) {
+        fname = `${date}.json`;
+        dateFiles[fname] = { date: date, songs: [] };
+        indexList.push({ date: date, file: fname });
+      }
+      dateFiles[fname].songs = dateFiles[fname].songs || [];
+      dateFiles[fname].songs.push(song);
+      renderManageList();
+      clearForm();
+    }
+
+    function updateSongFromForm() {
+      if (!selected.date || selected.idx == null) { alert('No song selected to update.'); return; }
+      const confirmUpdate = confirm('Apply update to this song?');
+      if (!confirmUpdate) return;
+      const date = document.getElementById('form-date').value;
+      const song = songsByDate[selected.date][selected.idx];
+      song.title = document.getElementById('form-title-input').value || song.title;
+      song.artist = document.getElementById('form-artist-input').value || song.artist;
+      song.artistUrl = document.getElementById('form-artist-url').value || song.artistUrl;
+      song.youtubeUrl = document.getElementById('form-youtube').value || song.youtubeUrl;
+      song.lyrics = document.getElementById('form-lyrics').value.split('\n').map(l=>l.trim()).filter(Boolean);
+      // update dateFiles: remove from old file and add to target file
+      const oldDate = selected.date;
+      let oldF = findFileForDate(oldDate);
+      if (oldF && dateFiles[oldF] && Array.isArray(dateFiles[oldF].songs)) {
+        // find same song object reference by title+artist fallback
+        const idxInFile = dateFiles[oldF].songs.findIndex(s => s.title === (song.title) && (s.artist === song.artist));
+        if (idxInFile >= 0) dateFiles[oldF].songs.splice(idxInFile,1);
+      }
+      if (date !== oldDate) {
+        // move to new date in songsByDate
+        songsByDate[oldDate].splice(selected.idx,1);
+        if (!songsByDate[date]) songsByDate[date] = [];
+        song.date = date;
+        songsByDate[date].push(song);
+      }
+      // add to file for new date
+      let newF = findFileForDate(date);
+      if (!newF) {
+        newF = `${date}.json`;
+        dateFiles[newF] = { date: date, songs: [] };
+        indexList.push({ date: date, file: newF });
+      }
+      dateFiles[newF].songs = dateFiles[newF].songs || [];
+      dateFiles[newF].songs.push(song);
+
+      renderManageList();
+      clearForm();
+    }
+
+    function deleteSong(date, idx) {
+      const confirmDelete = confirm('Delete this song permanently from current session?');
+      if (!confirmDelete) return;
+      const song = songsByDate[date][idx];
+      // remove from songsByDate
+      songsByDate[date].splice(idx,1);
+      if (songsByDate[date].length === 0) delete songsByDate[date];
+      // remove from corresponding dateFiles entry if exists
+      const fname = findFileForDate(date);
+      if (fname && dateFiles[fname] && Array.isArray(dateFiles[fname].songs)) {
+        const i = dateFiles[fname].songs.findIndex(s => s.title === song.title && s.artist === song.artist);
+        if (i >= 0) dateFiles[fname].songs.splice(i,1);
+      }
+      renderManageList();
+      clearForm();
+    }
+
+    function exportMergedJSON() {
+      const merged = { songs: [] };
+      Object.keys(songsByDate).forEach(d => {
+        songsByDate[d].forEach(s => {
+          merged.songs.push(s);
+        });
+      });
+      const blob = new Blob([JSON.stringify(merged, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'songs-merged.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadPerDateFiles() {
+      Object.keys(dateFiles).forEach(fname => {
+        const obj = dateFiles[fname];
+        const blob = new Blob([JSON.stringify(obj, null, 2)], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fname;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    document.getElementById('btn-refresh').onclick = loadIndexAndFiles;
+    document.getElementById('btn-export-merged').onclick = exportMergedJSON;
+    document.getElementById('btn-export-perdate').onclick = downloadPerDateFiles;
+    document.getElementById('btn-add').onclick = addSongFromForm;
+    document.getElementById('btn-update').onclick = updateSongFromForm;
+    document.getElementById('btn-delete').onclick = () => { if(selected.date!=null && selected.idx!=null){ if(confirm('Delete selected?')) deleteSong(selected.date, selected.idx);} };
+    document.getElementById('btn-clearform').onclick = clearForm;
+
+    // initial load
+    loadIndexAndFiles();
+  </script>
+</body>
+</html>

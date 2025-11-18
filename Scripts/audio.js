@@ -6,7 +6,7 @@ function initBackgroundAudio() {
     audioElement = document.createElement('audio');
     audioElement.id = 'background-audio';
     audioElement.loop = true;
-    audioElement.volume = 0.6;
+    audioElement.volume = 0.3;
     
     const source = document.createElement('source');
     source.src = 'Resources/the-sounds-of-the-sea-the-sound-of-the-surf.mp3';
