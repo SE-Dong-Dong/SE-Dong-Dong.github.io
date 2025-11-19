@@ -1,0 +1,17 @@
+{
+  "date": "2025-11-19",
+  "songs": [
+    {
+      "title": "Math Rock Collection 1",
+      "artist": "Math Rock ",
+      "artistUrl": "https://en.wikipedia.org/wiki/Math_rock",
+      "youtubeUrl": "https://youtu.be/jhIctzgP7vA?si=AgYd9qfIbDD6dntw",
+      "lyrics": [
+        "Math rock is a style of alternative and indie rock with roots in bands such as King Crimson and Rush. \\n",
+        "It is characterized by complex, atypical rhythmic structures (including irregular stopping and starting), counterpoint, odd time signatures, and extended chords.\\n",
+        "Bearing similarities to post-rock, math rock has been described as the \"opposite side of the same coin\". Opting for a \"rockier\" approach to songwriting and timbres, the style is often performed by smaller ensembles which emphasize the role of the guitar"
+      ],
+      "date": "2025-11-19"
+    }
+  ]
+}
