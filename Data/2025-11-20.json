@@ -1,0 +1,26 @@
+{
+  "date": "2025-11-20",
+  "songs": [
+    {
+      "title": "The Fool On The Hill",
+      "artist": "Beatles",
+      "artistUrl": "https://en.wikipedia.org/wiki/The_Fool_on_the_Hill",
+      "youtubeUrl": "https://youtu.be/9FFLp_w6kH8?si=Z_NYeP1s8QT1rmOX",
+      "lyrics": [
+        "\"The Fool on the Hill\" is a song by the English rock band the Beatles from their 1967 EP and album Magical Mystery Tour. It was written and sung by Paul McCartney and credited to the Lennon–McCartney partnership. The lyrics describe a solitary figure, the one named in the title, who is not understood by others, but is actually wise. McCartney said the idea for the song was inspired by the Dutch design collective the Fool, who derived their name from the tarot card of the same name, and possibly by Maharishi Mahesh Yogi."
+      ],
+      "date": "2025-11-20"
+    },
+        {
+      "title": "A Beautiful Mind Soundtrack",
+      "artist": "Soundtrack",
+      "artistUrl": "https://en.wikipedia.org/wiki/A_Beautiful_Mind_(soundtrack)",
+      "youtubeUrl": "https://youtu.be/e1J8sY8RSfA?si=eGSof1Cygmo0DUsp",
+      "lyrics": [
+        "Soundtrack"],
+      "date": "2025-11-20"
+    }
+  ]
+}
+
+
