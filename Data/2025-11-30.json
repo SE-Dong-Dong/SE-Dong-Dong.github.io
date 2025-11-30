@@ -1,0 +1,35 @@
+{
+  "date": "2025-11-30",
+  "songs": [
+    {
+      "title": "8 Humoresques, Op. 101, B. 187",
+      "artist": "Antonín Dvořák",
+      "artistUrl": "https://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k",
+      "youtubeUrl": "https://www.youtube.com/watch?v=R_qvTNTKFVY",
+"lyrics": [
+  "I feel both happy and sad when listening to this music."
+],
+      "date": "2025-11-30"
+    }, {
+      "title": "Cinema Paradiso Soundtrack",
+      "artist": "Ennio Morricone",
+      "artistUrl": "https://open.spotify.com/artist/1nIUhcKHnK6iyumRyoV68C?si=iHDFetieSYmJs3o2FTIi2A",
+      "youtubeUrl": "https://open.spotify.com/album/0hvxA5cmM7GmXxYSd3kkK5?si=EDhox3y0Ska3t2z81daMrQ",
+      "lyrics": [
+  "I cannot forget this melody."
+],
+     "date": "2025-11-30"
+    }, {
+      "title": "Princess Mononoke Soundtrack",
+      "artist": "久石让",
+      "artistUrl": "https://open.spotify.com/artist/7nzSoJISlVJsn7O0yTeMOB?si=v3RViKfcRUmHyroYChaHGw",
+      "youtubeUrl": "https://open.spotify.com/album/2ZHxPDTCRU5STetdmXeW6p?si=fpfspLmwQE-0KLBJQwSYMg",
+      "lyrics": [
+  "The movie and music are both amazing!"
+],
+      "date": "2025-11-30"
+    }
+  ]
+}
+
+
