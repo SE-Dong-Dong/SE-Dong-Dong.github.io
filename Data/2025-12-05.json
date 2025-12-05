@@ -1,0 +1,55 @@
+{
+  "date": "2025-12-05",
+  "songs": [
+    {
+      "title": "Harvest Moon",
+      "artist": "Neil Young",
+      "artistUrl": "https://open.spotify.com/artist/6v8FB84lnmJs434UJf2Mrm?si=eg0Q-EMVSaWncNg3I8lpnw",
+      "youtubeUrl": "https://open.spotify.com/track/5l9c6bJmzvftumhz4TMPgk?si=f785354ca11348bc",
+      "lyrics": [
+        "I think this song sounds quite relaxing."
+      ],
+      "date": "2025-12-05"
+    },
+    {
+      "title": "Nowhere Man",
+      "artist": "Beatles",
+      "artistUrl": "https://open.spotify.com/artist/3WrFJ7ztbogyGnTHbHJFl2?si=sAaoiQu6TbScsIXzsCMM9g",
+      "youtubeUrl": "https://open.spotify.com/track/5SUlhldQJtOhUr2GzH5RI7?si=7f32d45bbb614141",
+      "lyrics": [
+        "A good song!"
+      ],
+      "date": "2025-12-05"
+    },
+    {
+      "title": "In My Life",
+      "artist": "Beatles",
+      "artistUrl": "https://open.spotify.com/track/3KfbEIOC7YIv90FIfNSZpo?si=04794967140a4aee",
+      "youtubeUrl": "https://open.spotify.com/track/3KfbEIOC7YIv90FIfNSZpo?si=04794967140a4aee",
+      "lyrics": [
+        "When the former German chancellor Scholz retired, the band played this song haha."
+      ],
+      "date": "2025-12-05"
+    },
+    {
+      "title": "Golden",
+      "artist": "Cory Wong",
+      "artistUrl": "",
+      "youtubeUrl": "https://open.spotify.com/artist/6xt9sJmmyYwWkJv8A6ssiU?si=AqaIXaQ5TfCT7Z3t-m7Jag",
+      "lyrics": [
+        "Cory Wong is the best Funk player I think!"
+      ],
+      "date": "2025-12-05"
+    },
+    {
+      "title": "Todome no ichigeki",
+      "artist": "Cory Wong",
+      "artistUrl": "https://open.spotify.com/track/3RqT5175BrzANXK3yaafEm?si=de26f7ff06484939",
+      "youtubeUrl": "https://open.spotify.com/track/3RqT5175BrzANXK3yaafEm?si=de26f7ff06484939",
+      "lyrics": [
+        "The theme music of Spy Family episode II!"
+      ],
+      "date": "2025-12-05"
+    }
+  ]
+}
