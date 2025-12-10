@@ -1,0 +1,47 @@
+{
+  "date": "2025-12-11",
+  "songs": [
+
+        {
+      "title": "Jump",
+      "artist": "Van Helen",
+      "artistUrl": "https://open.spotify.com/artist/2cnMpRsOVqtPMfq7YiFE6K?si=_50T1t2ZSzqH3ec1T-69vQ",
+      "youtubeUrl": "https://open.spotify.com/track/7N3PAbqfTjSEU1edb2tY8j?si=4f2a39bfb69c4519",
+"lyrics": [
+  "Rock Song"
+],
+
+      "date": "2025-12-11"
+    },
+                {
+      "title": "Killer Queen",
+      "artist": "Queen",
+      "artistUrl": "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d?si=1YrYLqaVT324r7igRPLJjA",
+      "youtubeUrl": "https://open.spotify.com/track/4cIPLtg1avt2Jm3ne9S1zy?si=fef8c5b863204ceb",
+"lyrics": [
+  "Rock Song"
+],
+
+      "date": "2025-12-11"
+    }, 
+                    {
+      "title": "Love of My Life",
+      "artist": "Queen",
+      "artistUrl": "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d?si=1YrYLqaVT324r7igRPLJjA",
+      "youtubeUrl": "https://open.spotify.com/track/4YJUTdZ0Pgl0ZeNyHYXeLd?si=886ca4f0208a4ff5",
+"lyrics": [
+  "The singer of Queen, Freddie Mercury, met Mary Austin in the early 1970s, and the two quickly became romantically involved and moved in together. During that period, Freddie even proposed to Mary—their relationship was so steady that nearly all of their friends believed they would eventually get married.",
+  "As his career took off and he gained a deeper understanding of his own emotional world, Freddie gradually realized that he was gay.",
+  "Freddie chose to tell Mary everything himself. He was deeply afraid of hurting her, yet he refused to lie to her.",
+  "Even so, Freddie continued to love her deeply."
+],
+
+      "date": "2025-12-11"
+    }
+
+
+
+  ]
+}
+
+
