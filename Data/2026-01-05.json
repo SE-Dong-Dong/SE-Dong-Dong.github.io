@@ -1,0 +1,41 @@
+{
+  "date": "2026-01-05",
+  "songs": [
+    {
+      "title": "A Go Go",
+      "artist": "John Scofield",
+      "artistUrl": "https://open.spotify.com/artist/14RXohtx6NiBGFTW8IdmAK?si=oTnt_P1uRgWkx8NXbH9A7A",
+      "youtubeUrl": "https://open.spotify.com/track/4bcyZfaAWCN5SwJgYToxkN?si=88fd651bf8304988",
+"lyrics": [
+  "Instrumental"
+],
+
+      "date": "2026-01-05"
+    }, 
+        {
+      "title": "I Don't Need No Doctor",
+      "artist": "John Scofield",
+      "artistUrl": "https://open.spotify.com/artist/14RXohtx6NiBGFTW8IdmAK?si=oTnt_P1uRgWkx8NXbH9A7A",
+      "youtubeUrl": "https://open.spotify.com/track/2QR8phLXkLkE7m1T999YzS?si=1927c6daebc44deb",
+"lyrics": [
+  "Blues Rock"
+],
+
+      "date": "2026-01-05"
+    },
+            {
+      "title": "Sunday of Angels",
+      "artist": "Oshio Kotaro",
+      "artistUrl": "https://open.spotify.com/artist/21HpfUqBSYSTMF20FOw2V2?si=ZZyhjvscTtmBqO_qbeoW6g",
+      "youtubeUrl": "https://open.spotify.com/track/4SdjcbyXL9Ll61wfqIYWcB?si=ccce85fa58454d67",
+"lyrics": [
+  "Instrumental"
+],
+
+      "date": "2026-01-05"
+    }
+  ]
+}
+
+
+

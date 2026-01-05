@@ -9,7 +9,7 @@ function initBackgroundAudio() {
     audioElement.volume = 0.3;
     
     const source = document.createElement('source');
-    source.src = 'Resources/the-sounds-of-the-sea-the-sound-of-the-surf.mp3';
+    source.src = 'Resources/cosmic.mp3'; // 改成 cosmic
     source.type = 'audio/mpeg';
     
     audioElement.appendChild(source);
@@ -114,7 +114,7 @@ function createAudioToggleButton() {
 function updateButtonState() {
     const button = document.getElementById('audio-toggle-btn');
     if (button) {
-        button.innerHTML = isPlaying ? '⏸️ Stop Sea Sound' : '🔊 Play Sea Sound';
+        button.innerHTML = isPlaying ? '⏸️ Stop Sound' : '🔊 Play Sound';
         button.title = isPlaying ? 'Click to turn off ocean waves' : 'Click to turn on ocean waves';
     }
 }

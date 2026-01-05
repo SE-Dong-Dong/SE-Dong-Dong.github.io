@@ -57,135 +57,156 @@ function normalizeToISO(dateStr) {
     return dateStr;
 }
 
-function setupFilterControls(songs, availableDates = []) {
-	const yearSelect = document.getElementById('filter-year');
-	const monthSelect = document.getElementById('filter-month');
-	const dateSelect = document.getElementById('filter-date');
-	const clearBtn = document.getElementById('clear-filter');
+function setupFilterControls(songs) {
+    const yearSelect = document.getElementById('filter-year');
+    const monthSelect = document.getElementById('filter-month');
+    const dateSelect = document.getElementById('filter-date');
+    const clearBtn = document.getElementById('clear-filter');
 
-	// Normalize and sort unique dates (ISO YYYY-MM-DD)
-	const dates = (availableDates.length ? availableDates : songs.map(s => normalizeToISO(s.date)).filter(Boolean)).sort();
+    if (!yearSelect || !monthSelect || !dateSelect) return;
 
-	// Populate date select (exact dates)
-	dateSelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
-	dates.forEach(d => {
-		const opt = document.createElement('option');
-		opt.value = d; // YYYY-MM-DD
-		opt.textContent = d;
-		dateSelect.appendChild(opt);
-	});
-	if (!dates.length) dateSelect.classList.add('filter-disabled'); else dateSelect.classList.remove('filter-disabled');
+    // 获取所有可用的日期
+    const dates = songs
+        .map(s => normalizeToISO(s.date))
+        .filter(Boolean)
+        .sort();
 
-	// Populate months available (YYYY-MM) but display as YYYY-M
-	const months = Array.from(new Set(dates.map(d => d.slice(0, 7)))).sort();
-	monthSelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
-	months.forEach(m => {
-		const [y, mm] = m.split('-');
-		const display = `${y}-${parseInt(mm, 10)}`; // e.g. 2025-8
-		const opt = document.createElement('option');
-		opt.value = m; // YYYY-MM
-		opt.textContent = display;
-		monthSelect.appendChild(opt);
-	});
-	if (!months.length) monthSelect.classList.add('filter-disabled'); else monthSelect.classList.remove('filter-disabled');
+    // 提取所有年份
+    const years = Array.from(new Set(dates.map(d => d.slice(0, 4)))).sort().reverse();
+    
+    // 填充年份下拉
+    yearSelect.innerHTML = '<option value="">Year</option>';
+    years.forEach(year => {
+        const opt = document.createElement('option');
+        opt.value = year;
+        opt.textContent = year;
+        yearSelect.appendChild(opt);
+    });
 
-	// Populate years available (YYYY)
-	const years = Array.from(new Set(dates.map(d => d.slice(0, 4)))).sort();
-	yearSelect.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
-	years.forEach(y => {
-		const opt = document.createElement('option');
-		opt.value = y;
-		opt.textContent = y;
-		yearSelect.appendChild(opt);
-	});
-	if (!years.length) yearSelect.classList.add('filter-disabled'); else yearSelect.classList.remove('filter-disabled');
+    // 年份改变
+    yearSelect.onchange = () => {
+        const selectedYear = yearSelect.value;
+        
+        if (selectedYear) {
+            // 清空月份和日期
+            monthSelect.value = '';
+            dateSelect.value = '';
+            currentFilter = { type: 'year', value: selectedYear };
+        } else {
+            currentFilter = null;
+        }
+        
+        // 更新月份选项（仅显示该年的月份）
+        updateMonthOptions(dates, selectedYear);
+        updateDateOptions(dates, selectedYear, '');
+        renderSongs(songs);
+    };
 
-	// Handlers: selecting a year limits month options; selecting a month limits date options; selecting date sets exact filter
-	yearSelect.onchange = (e) => {
-		const val = e.target.value; // YYYY
-		if (!val) {
-			// clear filter
-			currentFilter = null;
-			// enable all month/date options
-			monthSelect.querySelectorAll('option:not([value=""])').forEach(opt => opt.disabled = false);
-			dateSelect.querySelectorAll('option:not([value=""])').forEach(opt => opt.disabled = false);
-			dateSelect.value = '';
-			monthSelect.value = '';
-			renderSongs(songs);
-			return;
-		}
-		// disable months not in this year
-		monthSelect.querySelectorAll('option:not([value=""])').forEach(opt => {
-			opt.disabled = !opt.value.startsWith(val + '-');
-		});
-		// clear downstream selects
-		monthSelect.value = '';
-		dateSelect.value = '';
-		currentFilter = { type: 'year', value: val };
-		renderSongs(songs);
-	};
+    // 月份改变
+    monthSelect.onchange = () => {
+        const selectedYear = yearSelect.value;
+        const selectedMonth = monthSelect.value;
+        
+        if (selectedMonth) {
+            dateSelect.value = '';
+            currentFilter = { type: 'month', value: selectedMonth };
+        } else if (selectedYear) {
+            currentFilter = { type: 'year', value: selectedYear };
+        } else {
+            currentFilter = null;
+        }
+        
+        updateDateOptions(dates, selectedYear, selectedMonth);
+        renderSongs(songs);
+    };
 
-	monthSelect.onchange = (e) => {
-		const val = e.target.value; // YYYY-MM
-		if (!val) {
-			// if month cleared, fall back to year filter if set
-			if (yearSelect && yearSelect.value) {
-				currentFilter = { type: 'year', value: yearSelect.value };
-			} else {
-				currentFilter = null;
-			}
-			// enable all date options
-			dateSelect.querySelectorAll('option:not([value=""])').forEach(opt => opt.disabled = false);
-			dateSelect.value = '';
-			renderSongs(songs);
-			return;
-		}
-		// disable dates not in this month
-		dateSelect.querySelectorAll('option:not([value=""])').forEach(opt => {
-			opt.disabled = !opt.value.startsWith(val);
-		});
-		dateSelect.value = '';
-		currentFilter = { type: 'month', value: val };
-		renderSongs(songs);
-	};
+    // 日期改变
+    dateSelect.onchange = () => {
+        const selectedDate = dateSelect.value;
+        
+        if (selectedDate) {
+            currentFilter = { type: 'date', value: selectedDate };
+        } else {
+            const selectedMonth = monthSelect.value;
+            const selectedYear = yearSelect.value;
+            if (selectedMonth) {
+                currentFilter = { type: 'month', value: selectedMonth };
+            } else if (selectedYear) {
+                currentFilter = { type: 'year', value: selectedYear };
+            } else {
+                currentFilter = null;
+            }
+        }
+        
+        renderSongs(songs);
+    };
 
-	dateSelect.onchange = (e) => {
-		const val = e.target.value; // YYYY-MM-DD
-		if (!val) {
-			// if date cleared, apply month or year filter if present
-			if (monthSelect && monthSelect.value) {
-				currentFilter = { type: 'month', value: monthSelect.value };
-			} else if (yearSelect && yearSelect.value) {
-				currentFilter = { type: 'year', value: yearSelect.value };
-			} else {
-				currentFilter = null;
-			}
-			renderSongs(songs);
-			return;
-		}
-		// exact date selected
-		currentFilter = { type: 'date', value: val };
-		// sync month/year selects visually
-		if (monthSelect) monthSelect.value = val.slice(0,7);
-		if (yearSelect) yearSelect.value = val.slice(0,4);
-		renderSongs(songs);
-	};
+    // Clear 按钮
+    clearBtn.onclick = () => {
+        yearSelect.value = '';
+        monthSelect.value = '';
+        dateSelect.value = '';
+        currentFilter = null;
+        monthSelect.innerHTML = '<option value="">Month</option>';
+        dateSelect.innerHTML = '<option value="">Date</option>';
+        renderSongs(songs);
+    };
 
-	clearBtn.onclick = () => {
-		currentFilter = null;
-		yearSelect.value = '';
-		monthSelect.value = '';
-		dateSelect.value = '';
-		monthSelect.querySelectorAll('option:not([value=""])').forEach(opt => opt.disabled = false);
-		dateSelect.querySelectorAll('option:not([value=""])').forEach(opt => opt.disabled = false);
-		renderSongs(songs);
-	};
+    // 初始化
+    updateMonthOptions(dates, '');
+    updateDateOptions(dates, '', '');
+}
+
+function updateMonthOptions(dates, year) {
+    const monthSelect = document.getElementById('filter-month');
+    monthSelect.innerHTML = '<option value="">Month</option>';
+    
+    if (!year) return;
+    
+    // 获取该年的所有月份
+    const months = Array.from(new Set(
+        dates
+            .filter(d => d.startsWith(year))
+            .map(d => d.slice(0, 7)) // YYYY-MM
+    )).sort();
+    
+    months.forEach(month => {
+        const opt = document.createElement('option');
+        const monthNum = month.slice(5); // 提取 MM
+        opt.value = month;
+        opt.textContent = `${monthNum}`;
+        monthSelect.appendChild(opt);
+    });
+}
+
+function updateDateOptions(dates, year, month) {
+    const dateSelect = document.getElementById('filter-date');
+    dateSelect.innerHTML = '<option value="">Date</option>';
+    
+    if (!month) return;
+    
+    // 获取该月的所有日期
+    const datesInMonth = dates
+        .filter(d => d.startsWith(month))
+        .sort();
+    
+    datesInMonth.forEach(date => {
+        const opt = document.createElement('option');
+        const day = date.slice(8); // 提取 DD
+        opt.value = date;
+        opt.textContent = day;
+        dateSelect.appendChild(opt);
+    });
 }
 
 function applyFilterToList(list) {
     if (!currentFilter) return list;
-    if (currentFilter.type === 'date') {
-        return list.filter(s => normalizeToISO(s.date) === currentFilter.value);
+    
+    if (currentFilter.type === 'year') {
+        return list.filter(s => {
+            const iso = normalizeToISO(s.date);
+            return iso && iso.startsWith(currentFilter.value);
+        });
     }
     if (currentFilter.type === 'month') {
         return list.filter(s => {
@@ -193,6 +214,10 @@ function applyFilterToList(list) {
             return iso && iso.startsWith(currentFilter.value);
         });
     }
+    if (currentFilter.type === 'date') {
+        return list.filter(s => normalizeToISO(s.date) === currentFilter.value);
+    }
+    
     return list;
 }
 
@@ -223,29 +248,32 @@ function renderSongs(songs) {
         const group = document.createElement('div');
         group.className = 'song-date-group';
 
-        // 可点击的日期标题
+        // 可点击的日期标题（仅添加一次）
         const header = document.createElement('div');
         const btn = document.createElement('button');
         btn.className = 'date-btn';
-        // 将日期格式化为 ISO 用于 dataset（可点击时作为筛选）
         const iso = normalizeToISO(date) || '';
-        btn.dataset.date = iso.slice(0,10); // YYYY-MM-DD or ''
+        btn.dataset.date = iso.slice(0,10);
         btn.textContent = date;
         btn.onclick = () => {
             if (btn.dataset.date) {
                 currentFilter = { type: 'date', value: btn.dataset.date };
-                // 同步 date input if present
-                const di = document.getElementById('filter-date');
-                if (di) di.value = btn.dataset.date;
-                const mi = document.getElementById('filter-month');
-                if (mi) mi.value = btn.dataset.date.slice(0,7);
+                const yearSelect = document.getElementById('filter-year');
+                const monthSelect = document.getElementById('filter-month');
+                const dateSelect = document.getElementById('filter-date');
+                if (yearSelect) yearSelect.value = btn.dataset.date.slice(0, 4);
+                if (monthSelect) monthSelect.value = btn.dataset.date.slice(0, 7);
+                if (dateSelect) dateSelect.value = btn.dataset.date;
                 renderSongs(songsCache);
             }
         };
         header.appendChild(btn);
         group.appendChild(header);
 
-        // songs list
+        // songs list（每个日期只添加一次日期标题，然后添加所有歌曲）
+        const songsList = document.createElement('ul');
+        songsList.className = 'songs-for-date';
+        
         songsByDate[date].forEach((song, idx) => {
             const item = document.createElement('li');
             item.className = 'song-item';
@@ -284,8 +312,11 @@ function renderSongs(songs) {
 
             item.appendChild(info);
             item.appendChild(selectBtn);
-            songList.appendChild(item);
+            songsList.appendChild(item);
         });
+
+        group.appendChild(songsList);
+        songList.appendChild(group);
     });
 }
 

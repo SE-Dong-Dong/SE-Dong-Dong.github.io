@@ -7,53 +7,34 @@
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <!-- Snow background -->
+    <!-- 星空效果 -->
+    <div class="stars-container" id="stars-container"></div>
+
+    <!-- 雪花 -->
     <div class="snow-container" id="snow-container"></div>
 
-    <!-- Main content -->
-    <script>
-  const rand = Date.now();
-  document.write(`<link rel="stylesheet" href="style.css?v=${rand}">`);
-</script>
+    <!-- 切换星空按钮 - 隐藏 -->
+    <button id="toggle-stars-btn" class="toggle-btn stars-active" style="display:none;">✨ Stars: ON</button>
 
+    <!-- Main content -->
     <div class="main-wrapper">
-        <!-- Header -->
         <header class="header">
-            <h1>🎵 Music Sharing Website Demo</h1>
-            <p>Merry Christmas!!!</br>
-            By clicking the name of the song and writer, you can go to the website.</p>
+            <h1>🎵 Music Sharing</h1>
+            <p>Welcome Daria! Here are some songs I'd like to share with you.</p>
         </header>
 
-        <!-- Two-column layout -->
         <div class="container">
             <div class="card left-card">
-                <!-- 新增：筛选控件 -->
                 <div class="filter-controls" id="filter-controls">
-                    <label for="filter-year">Year</label>
-                    <select id="filter-year">
-                        <option value="">All years</option>
-                    </select>
-
-                    <label for="filter-month">Month</label>
-                    <select id="filter-month">
-                        <option value="">All months</option>
-                    </select>
-
-                    <label for="filter-date">Date</label>
-                    <select id="filter-date">
-                        <option value="">All dates</option>
-                    </select>
-
+                    <select id="filter-year"></select>
+                    <select id="filter-month"></select>
+                    <select id="filter-date"></select>
                     <button class="clear-filter" id="clear-filter">Clear</button>
                 </div>
-
-                <!-- Left: Song list -->
-                <ul class="song-list" id="song-list">
-                    <!-- Songs will be dynamically loaded here -->
-                </ul>
+                <ul class="song-list" id="song-list"></ul>
             </div>
+
             <div class="card right-card">
-                <!-- Right: Lyrics display -->
                 <div class="lyrics-panel" id="lyrics-panel">
                     <div class="lyrics-placeholder">
                         <p>👈 Select a song to view lyrics</p>
@@ -63,7 +44,6 @@
         </div>
     </div>
 
-    <!-- Wave animation -->
     <div class="wave-container">
         <div class="wave"></div>
         <div class="wave"></div>
@@ -71,12 +51,40 @@
     </div>
 
     <script src="Scripts/snow.js"></script>
+    <script src="Scripts/stars.js"></script>
     <script src="Scripts/audio.js"></script>
     <script src="Scripts/songs.js"></script>
     <script>
+    
+
         document.addEventListener('DOMContentLoaded', () => {
-            initSnow('snow-container'); // 初始化雪花
-            loadSongs(); // 加载歌曲列表
+            initSnow('snow-container');
+            initStars('stars-container');
+            loadSongs();
+            
+            // 初始状态：星空打开（opacity: 1），雪花关闭（opacity: 0），海浪隐藏
+            const starsContainer = document.getElementById('stars-container');
+            const snowContainer = document.getElementById('snow-container');
+            const waveContainer = document.querySelector('.wave-container');
+            
+            if (starsContainer) {
+                starsContainer.style.opacity = '1';
+            }
+            if (snowContainer) {
+                snowContainer.style.opacity = '0';
+            }
+            if (waveContainer) {
+                waveContainer.style.display = 'none'; // 初始隐藏海浪
+            }
+            
+            // 更新配置状态
+            starsConfig.enabled = true;
+            
+            // 星空切换按钮（隐藏但保留功能）
+            const toggleBtn = document.getElementById('toggle-stars-btn');
+            if (toggleBtn) {
+                toggleBtn.onclick = toggleStars;
+            }
         });
     </script>
 </body>
