@@ -1,0 +1,33 @@
+{
+  "date": "2026-01-11",
+  "songs": [
+    {
+      "title": "Sunny Boy Rhapsody",
+      "artist": "toe",
+      "artistUrl": "https://open.spotify.com/artist/0rpKM0MniNkXM1SLSglYUZ?si=d8593f1cd31f4866",
+      "youtubeUrl": "https://open.spotify.com/track/0OK190AzBSYD6cR3BYYzEQ?si=3159c957a56f4452",
+      "lyrics": [
+        "from the anime Sonny Boy"
+      ]
+    },
+        {
+      "title": "Let There Be Light Again",
+      "artist": "Sunset Rollercoaster",
+      "artistUrl": "https://open.spotify.com/artist/7BqRcZsHYYQeqMAOp7e532?si=A_y4XdNkRsurbOaWNhlEqg",
+      "youtubeUrl": "https://open.spotify.com/album/6uQ4JRkPUIbk757knVVIZS?si=mH4tHuxjSHS77Vwrk2nwjw",
+      "lyrics": [
+        "from the anime Sonny Boy"
+      ]
+    },
+    {
+      "title": "Today's Song",
+      "artist": "Kaneyorimasaru",
+      "artistUrl": "https://open.spotify.com/artist/5h5smZjPHUEDyYNuafjehf?si=6c2724e20db94196",
+      "youtubeUrl": "https://open.spotify.com/track/1Z75pzAIs06dHzwINKQ2co?si=dd5eecc821e0437d",
+      "lyrics": [
+        "from the anime Sonny Boy"
+      ]
+    }
+
+  ]
+}
