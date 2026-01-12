@@ -1,2 +1,2 @@
-A static website of music list.
+static html
 
