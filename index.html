@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
+    <!-- 视频背景 -->
+    <video class="video-background" autoplay muted loop>
+        <source src="Resources/city_night.mp4" type="video/mp4">
+    </video>
+
     <!-- 星空效果 -->
     <div class="stars-container" id="stars-container"></div>
 
@@ -61,6 +66,7 @@
             initSnow('snow-container');
             initStars('stars-container');
             loadSongs();
+            // initBackgroundAudio(); // Disabled background music
             
             // 初始状态：星空打开（opacity: 1），雪花关闭（opacity: 0），海浪隐藏
             const starsContainer = document.getElementById('stars-container');
