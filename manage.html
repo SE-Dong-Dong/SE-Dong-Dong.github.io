@@ -22,6 +22,29 @@
     .btn.primary { background: linear-gradient(135deg,#64b5f6 0%,#42a5f5 100%); color:#fff; }
     .btn.warn { background:#ff7043; color:#fff; }
     .small { font-size:13px; padding:6px 8px; }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 900px) {
+      .manage-wrapper { padding: 16px; margin: 16px auto; }
+      .manage-header { flex-direction: column; gap: 12px; align-items: stretch; }
+      .manage-header > div { display: flex; flex-wrap: wrap; gap: 8px; }
+      .manage-header .btn { flex: 1; min-width: 120px; }
+      .manage-grid { flex-direction: column; }
+      .manage-form { width: 100%; }
+      .manage-list { max-height: 50vh; }
+    }
+    
+    @media (max-width: 600px) {
+      .manage-wrapper { padding: 12px; margin: 12px auto; }
+      .manage-header h2 { font-size: 20px; }
+      .manage-header .btn { font-size: 12px; padding: 8px 10px; min-width: 100px; }
+      .manage-list { padding: 10px; }
+      .manage-form { padding: 12px; }
+      .manage-form h3 { font-size: 16px; }
+      .manage-actions { flex-direction: column; }
+      .manage-actions .btn { width: 100%; }
+      .song-row { flex-direction: column; gap: 6px; }
+    }
   </style>
 </head>
 <body>
