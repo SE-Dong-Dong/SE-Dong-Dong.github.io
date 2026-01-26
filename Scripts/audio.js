@@ -9,7 +9,7 @@ function initBackgroundAudio() {
     audioElement.volume = 0.4;
     
     const source = document.createElement('source');
-    source.src = 'Resources/rains_on_windows.mp3'; // Rain BGM
+    source.src = 'Resources/background_music/kotaro-oshio-first-love.mp3'; // Background music
     source.type = 'audio/mpeg';
     
     audioElement.appendChild(source);
@@ -65,8 +65,8 @@ function toggleAudio() {
 function createAudioToggleButton() {
     const button = document.createElement('button');
     button.id = 'audio-toggle-btn';
-    button.innerHTML = '🌧️ Rain BGM';
-    button.title = 'Click to toggle rain sound';
+    button.textContent = '🎵 BGM';
+    button.title = 'Click to toggle background music';
     
     // Button styles - Visible and styled beautifully
     button.style.cssText = `
@@ -121,12 +121,12 @@ function updateButtonState() {
     const button = document.getElementById('audio-toggle-btn');
     if (button) {
         if (isPlaying) {
-            button.innerHTML = '🌧️ Rain BGM: ON';
-            button.title = 'Click to turn off rain sound';
+            button.textContent = '🎵 BGM: ON';
+            button.title = 'Click to turn off background music';
             button.style.opacity = '1';
         } else {
-            button.innerHTML = '🌧️ Rain BGM: OFF';
-            button.title = 'Click to turn on rain sound';
+            button.textContent = '🎵 BGM: OFF';
+            button.title = 'Click to turn on background music';
             button.style.opacity = '0.7';
         }
     }
@@ -146,8 +146,3 @@ function setupAudioListeners() {
         });
     }
 }
-
-// Initialize after page loads
-document.addEventListener('DOMContentLoaded', () => {
-    initBackgroundAudio();
-});

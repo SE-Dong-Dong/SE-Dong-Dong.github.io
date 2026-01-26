@@ -8,8 +8,8 @@
 </head>
 <body>
     <!-- 视频背景 -->
-    <video class="video-background" autoplay muted loop>
-        <source src="Resources/city_night.mp4" type="video/mp4">
+    <video class="video-background" id="bg-video" autoplay muted playsinline preload="auto">
+        Your browser does not support the video tag.
     </video>
 
     <!-- 星空效果 -->
@@ -60,13 +60,39 @@
     <script src="Scripts/audio.js"></script>
     <script src="Scripts/songs.js"></script>
     <script>
-    
+        // 背景视频播放列表
+        const videoPlaylist = [
+            'Resources/universe_videos/universe.mp4',
+            'Resources/universe_videos/universe1.mp4',
+            'Resources/universe_videos/universe2.mp4',
+            'Resources/universe_videos/universe3.mp4',
+            'Resources/universe_videos/universe4.mp4'
+        ];
+        // 随机选择初始视频
+        let currentVideoIndex = Math.floor(Math.random() * videoPlaylist.length);
+
+        function playNextVideo() {
+            const video = document.getElementById('bg-video');
+            currentVideoIndex = (currentVideoIndex + 1) % videoPlaylist.length;
+            video.src = videoPlaylist[currentVideoIndex];
+            video.load();
+            video.play().catch(err => console.log('Video play error:', err));
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initSnow('snow-container');
             initStars('stars-container');
             loadSongs();
-            // initBackgroundAudio(); // Disabled background music
+            initBackgroundAudio(); // Enable background music
+            
+            // 设置初始随机视频并播放
+            const video = document.getElementById('bg-video');
+            video.src = videoPlaylist[currentVideoIndex];
+            video.load();
+            video.play().catch(err => console.log('Video play error:', err));
+            
+            // 设置视频结束后自动播放下一个
+            video.addEventListener('ended', playNextVideo);
             
             // 初始状态：星空打开（opacity: 1），雪花关闭（opacity: 0），海浪隐藏
             const starsContainer = document.getElementById('stars-container');
